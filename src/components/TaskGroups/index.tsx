@@ -5,7 +5,7 @@ import useTaskContext from "../../hooks/useTaskContext";
 import useAppContext from "../../hooks/useAppContext";
 
 const TaskGroups: FC = () => {
-  const { activeTaskGroupId, setActiveTaskGroupId } = useAppContext();
+  const { activeTaskGroupIndex, setActiveTaskGroupIndex } = useAppContext();
   const taskContext = useTaskContext();
   const [taskGroups, setTaskGroups] = useState(taskContext.taskGroups);
 
@@ -18,10 +18,10 @@ const TaskGroups: FC = () => {
         {taskGroups.map((taskGroup) => (
           <li
             onClick={() => {
-              setActiveTaskGroupId(taskGroups.indexOf(taskGroup));
+              setActiveTaskGroupIndex(taskGroups.indexOf(taskGroup));
             }}
             className={`${
-              taskGroup.id === taskGroups[activeTaskGroupId].id
+              taskGroup.id === taskGroups[activeTaskGroupIndex].id
                 ? "font-medium"
                 : "font-light"
             } mb-5 text-xl cursor-pointer hover:font-medium transition-all duration-300 ease-in-out`}

@@ -7,14 +7,14 @@ import useAppContext from "../../hooks/useAppContext";
 import Task from "../Task";
 
 const TaskList: FC = () => {
-  const { activeTaskGroupId } = useAppContext();
+  const { activeTaskGroupIndex } = useAppContext();
   const { taskGroups } = useTaskContext();
 
-  const [tasks, setTasks] = useState(taskGroups[activeTaskGroupId].tasks);
+  const [tasks, setTasks] = useState(taskGroups[activeTaskGroupIndex].tasks);
 
   useEffect(() => {
-    setTasks(taskGroups[activeTaskGroupId].tasks);
-  }, [activeTaskGroupId]);
+    setTasks(taskGroups[activeTaskGroupIndex].tasks);
+  }, [activeTaskGroupIndex]);
 
   return (
     <div>

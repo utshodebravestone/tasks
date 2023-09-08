@@ -3,23 +3,23 @@ import { FC, ReactElement, createContext, useState } from "react";
 import AppContextType from "./types";
 
 export const AppContext = createContext<AppContextType>({
-  activeTaskGroupId: 0,
-  setActiveTaskGroupId(id) {
-    console.log(id);
+  activeTaskGroupIndex: 0,
+  setActiveTaskGroupIndex(index) {
+    console.log(index);
   },
 });
 
 export const AppContextProvider: FC<{
   children: ReactElement | ReactElement[];
 }> = ({ children }) => {
-  const [activeTaskGroupId, setActiveTaskGroupId] = useState(0);
+  const [activeTaskGroupIndex, setActiveTaskGroupIndex] = useState(0);
 
   return (
     <AppContext.Provider
       value={{
-        activeTaskGroupId,
-        setActiveTaskGroupId: (taskGroupId) =>
-          setActiveTaskGroupId(taskGroupId),
+        activeTaskGroupIndex,
+        setActiveTaskGroupIndex: (taskGroupIndex) =>
+          setActiveTaskGroupIndex(taskGroupIndex),
       }}
     >
       {children}

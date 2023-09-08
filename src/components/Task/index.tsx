@@ -1,16 +1,17 @@
 import { FC, useEffect, useState } from "react";
+
 import useAppContext from "../../hooks/useAppContext";
 import useTaskContext from "../../hooks/useTaskContext";
 
 const Task: FC<{ taskIndex: number }> = ({ taskIndex }) => {
-  const { activeTaskGroupId } = useAppContext();
+  const { activeTaskGroupIndex } = useAppContext();
   const { taskGroups, onTaskUpdate } = useTaskContext();
   const [task, setTask] = useState(
-    taskGroups[activeTaskGroupId].tasks[taskIndex]
+    taskGroups[activeTaskGroupIndex].tasks[taskIndex]
   );
 
   useEffect(() => {
-    onTaskUpdate(activeTaskGroupId, task.id, task);
+    onTaskUpdate(activeTaskGroupIndex, task.id, task);
   }, [task]);
 
   return (

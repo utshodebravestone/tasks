@@ -13,22 +13,22 @@ export const TaskContext = createContext<TaskContextType>({
     console.log(taskGroup);
   },
 
-  onTaskGroupUpdate: (taskGroupId: number, taskGroup: TaskGroupType) => {
-    console.log(taskGroupId, taskGroup);
+  onTaskGroupUpdate: (taskGroupIndex: number, taskGroup: TaskGroupType) => {
+    console.log(taskGroupIndex, taskGroup);
   },
 
-  onTaskGroupDelete: (taskGroupId: number) => {
-    console.log(taskGroupId);
+  onTaskGroupDelete: (taskGroupIndex: number) => {
+    console.log(taskGroupIndex);
   },
 
-  onTaskCreate: (taskGroupId: number, task: TaskType) => {
-    console.log(taskGroupId, task);
+  onTaskCreate: (taskGroupIndex: number, task: TaskType) => {
+    console.log(taskGroupIndex, task);
   },
-  onTaskUpdate: (taskGroupId: number, taskId: number, task: TaskType) => {
-    console.log(taskGroupId, taskId, task);
+  onTaskUpdate: (taskGroupIndex: number, taskId: number, task: TaskType) => {
+    console.log(taskGroupIndex, taskId, task);
   },
-  onTaskDelete: (taskGroupId: number, taskId: number) => {
-    console.log(taskGroupId, taskId);
+  onTaskDelete: (taskGroupIndex: number, taskId: number) => {
+    console.log(taskGroupIndex, taskId);
   },
 });
 
@@ -74,35 +74,38 @@ export const TaskContextProvider: FC<{
   const onTaskGroupCreate = (taskGroup: TaskGroupType) =>
     setTaskGroups((taskGroups) => [...taskGroups, taskGroup]);
 
-  const onTaskGroupUpdate = (taskGroupId: number, taskGroup: TaskGroupType) =>
+  const onTaskGroupUpdate = (
+    taskGroupIndex: number,
+    taskGroup: TaskGroupType
+  ) =>
     setTaskGroups((taskGroups) =>
       taskGroups.map((storedTaskGroup) =>
-        storedTaskGroup.id === taskGroupId ? taskGroup : storedTaskGroup
+        storedTaskGroup.id === taskGroupIndex ? taskGroup : storedTaskGroup
       )
     );
 
-  const onTaskGroupDelete = (taskGroupId: number) =>
+  const onTaskGroupDelete = (taskGroupIndex: number) =>
     setTaskGroups((taskGroups) =>
-      taskGroups.filter((taskGroup) => taskGroup.id !== taskGroupId)
+      taskGroups.filter((taskGroup) => taskGroup.id !== taskGroupIndex)
     );
 
-  const onTaskCreate = (taskGroupId: number, task: TaskType) =>
+  const onTaskCreate = (taskGroupIndex: number, task: TaskType) =>
     setTaskGroups((taskGroups) =>
       taskGroups.map((storedTaskGroup) =>
-        storedTaskGroup.id === taskGroupId
+        storedTaskGroup.id === taskGroupIndex
           ? { ...storedTaskGroup, tasks: [...storedTaskGroup.tasks, task] }
           : storedTaskGroup
       )
     );
 
   const onTaskUpdate = (
-    taskGroupId: number,
+    taskGroupIndex: number,
     taskId: number,
     task: TaskType
   ) => {
     setTaskGroups((taskGroups) =>
       taskGroups.map((storedTaskGroup, id) =>
-        id === taskGroupId
+        id === taskGroupIndex
           ? {
               ...storedTaskGroup,
               tasks: storedTaskGroup.tasks.map((storedTask) =>
@@ -114,10 +117,10 @@ export const TaskContextProvider: FC<{
     );
   };
 
-  const onTaskDelete = (taskGroupId: number, taskId: number) =>
+  const onTaskDelete = (taskGroupIndex: number, taskId: number) =>
     setTaskGroups((taskGroups) =>
       taskGroups.map((storedTaskGroup) =>
-        storedTaskGroup.id === taskGroupId
+        storedTaskGroup.id === taskGroupIndex
           ? {
               ...storedTaskGroup,
               tasks: storedTaskGroup.tasks.filter((task) => task.id !== taskId),

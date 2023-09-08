@@ -1,5 +1,5 @@
 export default interface AppContextType {
-  activeTaskGroupId: number;
+  activeTaskGroupIndex: number;
 
-  setActiveTaskGroupId: (id: number) => void;
+  setActiveTaskGroupIndex: (index: number) => void;
 }

@@ -5,10 +5,14 @@ export default interface ContextType {
   taskGroups: TaskGroupType[];
 
   onTaskGroupCreate: (taskGroup: TaskGroupType) => void;
-  onTaskGroupUpdate: (taskGroupId: number, taskGroup: TaskGroupType) => void;
-  onTaskGroupDelete: (taskGroupId: number) => void;
+  onTaskGroupUpdate: (taskGroupIndex: number, taskGroup: TaskGroupType) => void;
+  onTaskGroupDelete: (taskGroupIndex: number) => void;
 
-  onTaskCreate: (taskGroupId: number, task: TaskType) => void;
-  onTaskUpdate: (taskGroupId: number, taskId: number, task: TaskType) => void;
-  onTaskDelete: (taskGroupId: number, taskId: number) => void;
+  onTaskCreate: (taskGroupIndex: number, task: TaskType) => void;
+  onTaskUpdate: (
+    taskGroupIndex: number,
+    taskId: number,
+    task: TaskType
+  ) => void;
+  onTaskDelete: (taskGroupIndex: number, taskId: number) => void;
 }
