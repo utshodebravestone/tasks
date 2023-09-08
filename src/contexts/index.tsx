@@ -18,7 +18,8 @@ export const AppContextProvider: FC<{
     <AppContext.Provider
       value={{
         activeTaskGroupId,
-        setActiveTaskGroupId,
+        setActiveTaskGroupId: (taskGroupId) =>
+          setActiveTaskGroupId(taskGroupId),
       }}
     >
       {children}

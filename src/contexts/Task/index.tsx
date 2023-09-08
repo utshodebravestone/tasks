@@ -1,4 +1,4 @@
-import { FC, ReactElement, createContext, useState } from "react";
+import { FC, ReactElement, createContext, useEffect, useState } from "react";
 
 import TaskContextType from "./types";
 import TaskGroupType from "../../components/TaskGroups/types";
@@ -95,19 +95,24 @@ export const TaskContextProvider: FC<{
       )
     );
 
-  const onTaskUpdate = (taskGroupId: number, taskId: number, task: TaskType) =>
+  const onTaskUpdate = (
+    taskGroupId: number,
+    taskId: number,
+    task: TaskType
+  ) => {
     setTaskGroups((taskGroups) =>
-      taskGroups.map((storedTaskGroup) =>
-        storedTaskGroup.id === taskGroupId
+      taskGroups.map((storedTaskGroup, id) =>
+        id === taskGroupId
           ? {
               ...storedTaskGroup,
               tasks: storedTaskGroup.tasks.map((storedTask) =>
-                task.id === taskId ? task : storedTask
+                taskId === storedTask.id ? task : storedTask
               ),
             }
           : storedTaskGroup
       )
     );
+  };
 
   const onTaskDelete = (taskGroupId: number, taskId: number) =>
     setTaskGroups((taskGroups) =>
@@ -120,6 +125,10 @@ export const TaskContextProvider: FC<{
           : storedTaskGroup
       )
     );
+
+  useEffect(() => {
+    console.log("Re-Rendering TaskContext");
+  }, [taskGroups]);
 
   return (
     <TaskContext.Provider

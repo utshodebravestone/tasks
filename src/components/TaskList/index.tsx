@@ -8,14 +8,12 @@ import Task from "../Task";
 
 const TaskList: FC = () => {
   const { activeTaskGroupId } = useAppContext();
-  const taskContext = useTaskContext();
+  const { taskGroups } = useTaskContext();
 
-  const [tasks, setTasks] = useState(
-    taskContext.taskGroups[activeTaskGroupId].tasks
-  );
+  const [tasks, setTasks] = useState(taskGroups[activeTaskGroupId].tasks);
 
   useEffect(() => {
-    setTasks(taskContext.taskGroups[activeTaskGroupId].tasks);
+    setTasks(taskGroups[activeTaskGroupId].tasks);
   }, [activeTaskGroupId]);
 
   return (
@@ -24,9 +22,9 @@ const TaskList: FC = () => {
         Tasks
       </h1>
       <ul className="px-1">
-        {tasks.map((task) => (
+        {tasks.map((task, i) => (
           <li className="mb-5" key={task.id}>
-            <Task task={task} />
+            <Task taskIndex={i} />
           </li>
         ))}
       </ul>
