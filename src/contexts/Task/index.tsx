@@ -4,6 +4,7 @@ import TaskContextType from "./types";
 import TaskGroupType from "../../components/TaskGroups/types";
 import TaskType from "../../components/Task/types";
 
+import useLocalStorage from "../../hooks/useLocalStorage";
 import uid from "../../utils/uid";
 
 export const TaskContext = createContext<TaskContextType>({
@@ -35,41 +36,8 @@ export const TaskContext = createContext<TaskContextType>({
 export const TaskContextProvider: FC<{
   children: ReactElement | ReactElement[];
 }> = ({ children }) => {
-  const _taskGroups: TaskGroupType[] = [
-    {
-      id: uid(),
-      name: "programming",
-      tasks: [
-        {
-          id: uid(),
-          name: "Finish Practical Go Lessons",
-          complected: false,
-        },
-        {
-          id: uid(),
-          name: "Build some stuffs with Go",
-          complected: false,
-        },
-      ],
-    },
-    {
-      id: uid(),
-      name: "house work",
-      tasks: [
-        {
-          id: uid(),
-          name: "Make breakfast",
-          complected: false,
-        },
-        {
-          id: uid(),
-          name: "Set all the animals free",
-          complected: false,
-        },
-      ],
-    },
-  ];
-  const [taskGroups, setTaskGroups] = useState<TaskGroupType[]>(_taskGroups);
+  const { value, setValue } = useLocalStorage<TaskGroupType[]>("tasks");
+  const [taskGroups, setTaskGroups] = useState<TaskGroupType[]>(value);
 
   const onTaskGroupCreate = (taskGroup: TaskGroupType) =>
     setTaskGroups((taskGroups) => [...taskGroups, taskGroup]);
@@ -130,7 +98,7 @@ export const TaskContextProvider: FC<{
     );
 
   useEffect(() => {
-    console.log("Re-Rendering TaskContext");
+    setValue(taskGroups || [{ id: uid(), name: "default", tasks: [] }]);
   }, [taskGroups]);
 
   return (

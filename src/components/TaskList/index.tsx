@@ -12,8 +12,11 @@ import uid from "../../utils/uid";
 const TaskList: FC = () => {
   const { activeTaskGroupIndex } = useAppContext();
   const { taskGroups, onTaskCreate } = useTaskContext();
-
-  const [tasks, setTasks] = useState(taskGroups[activeTaskGroupIndex].tasks);
+  const [tasks, setTasks] = useState(
+    taskGroups && taskGroups.length !== 0 && taskGroups[activeTaskGroupIndex]
+      ? taskGroups[activeTaskGroupIndex].tasks
+      : []
+  );
   const [newTask, setNewTask] = useState<TaskType>({
     id: uid(),
     name: "",
@@ -21,7 +24,12 @@ const TaskList: FC = () => {
   });
 
   useEffect(() => {
-    setTasks(taskGroups[activeTaskGroupIndex].tasks);
+    if (
+      taskGroups &&
+      taskGroups.length !== 0 &&
+      taskGroups[activeTaskGroupIndex]
+    )
+      setTasks(taskGroups[activeTaskGroupIndex].tasks);
   }, [activeTaskGroupIndex, taskGroups]);
 
   return (

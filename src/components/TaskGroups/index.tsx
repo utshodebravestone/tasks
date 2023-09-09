@@ -24,38 +24,42 @@ const TaskGroups: FC = () => {
     setTaskGroups(initialTaskGroups);
   }, [initialTaskGroups]);
 
-  if (taskGroups.length === 0)
-    return (
-      <p className="mb-5 pb-1 text-center text-3xl font-medium border-b border-slate-100">
-        Task Group doesn't exist. <br /> You can create one in the form bellow.
-      </p>
-    );
-
   return (
     <div className="">
       <h1 className="mb-5 pb-1 text-center text-3xl font-medium border-b border-slate-100">
         Task Groups
       </h1>
-      <ul className="px-1">
-        {taskGroups.map((taskGroup) => (
-          <li
-            onClick={() => {
-              setActiveTaskGroupIndex(taskGroups.indexOf(taskGroup));
-            }}
-            className={` flex justify-between items-center ${
-              taskGroup.id === taskGroups[activeTaskGroupIndex].id
-                ? "font-medium"
-                : "font-light"
-            } mb-5 text-xl cursor-pointer hover:font-medium transition-all duration-300 ease-in-out`}
-            key={taskGroup.id}
-          >
-            <p># {taskGroup.name.toUpperCase()}</p>
-            <button onClick={() => onTaskGroupDelete(activeTaskGroupIndex)}>
-              <FaTrash />
-            </button>
-          </li>
-        ))}
-      </ul>
+      {taskGroups && taskGroups.length !== 0 && (
+        <ul className="px-1">
+          {taskGroups.map((taskGroup, i) => (
+            <li
+              onClick={() => {
+                setActiveTaskGroupIndex(taskGroups.indexOf(taskGroup));
+              }}
+              className={` flex justify-between items-center ${
+                taskGroup.id === taskGroups[activeTaskGroupIndex].id
+                  ? "font-medium"
+                  : "font-light"
+              } mb-5 text-xl cursor-pointer hover:font-medium transition-all duration-300 ease-in-out`}
+              key={taskGroup.id}
+            >
+              <p># {taskGroup.name.toUpperCase()}</p>
+              <button
+                onClick={() => {
+                  if (activeTaskGroupIndex === 0) {
+                    alert("Can't remove the default group.");
+                  } else {
+                    setActiveTaskGroupIndex(0);
+                    onTaskGroupDelete(i);
+                  }
+                }}
+              >
+                <FaTrash />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
       <form
         onSubmit={(e) => {
           e.preventDefault();
