@@ -4,17 +4,25 @@ import { FaPlus } from "react-icons/fa";
 import useTaskContext from "../../hooks/useTaskContext";
 import useAppContext from "../../hooks/useAppContext";
 
+import TaskType from "../Task/types";
+
 import Task from "../Task";
+import uid from "../../utils/uid";
 
 const TaskList: FC = () => {
   const { activeTaskGroupIndex } = useAppContext();
-  const { taskGroups } = useTaskContext();
+  const { taskGroups, onTaskCreate } = useTaskContext();
 
   const [tasks, setTasks] = useState(taskGroups[activeTaskGroupIndex].tasks);
+  const [newTask, setNewTask] = useState<TaskType>({
+    id: uid(),
+    name: "",
+    complected: false,
+  });
 
   useEffect(() => {
     setTasks(taskGroups[activeTaskGroupIndex].tasks);
-  }, [activeTaskGroupIndex]);
+  }, [activeTaskGroupIndex, taskGroups]);
 
   return (
     <div>
@@ -29,10 +37,18 @@ const TaskList: FC = () => {
         ))}
       </ul>
       <form
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={(e) => {
+          e.preventDefault();
+          onTaskCreate(activeTaskGroupIndex, newTask);
+          setNewTask({ id: uid(), name: "", complected: false });
+        }}
         className="px-1 flex justify-between items-end gap-5"
       >
         <input
+          value={newTask.name}
+          onChange={(e) =>
+            setNewTask((task) => ({ ...task, name: e.target.value }))
+          }
           className="w-full p-2.5 border-b border-slate-300 focus:outline-none hover:border-b-2"
           type="text"
           placeholder="What needs to be done?"
