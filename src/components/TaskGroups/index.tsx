@@ -22,7 +22,7 @@ const TaskGroups: FC = () => {
 
   useEffect(() => {
     setTaskGroups(initialTaskGroups);
-  }, [initialTaskGroups]);
+  }, [initialTaskGroups, activeTaskGroupIndex]);
 
   return (
     <div className="">
