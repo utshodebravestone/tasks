@@ -8,8 +8,12 @@ const Task: FC<{ taskIndex: number }> = ({ taskIndex }) => {
   const { activeTaskGroupIndex } = useAppContext();
   const { taskGroups, onTaskUpdate, onTaskDelete } = useTaskContext();
   const [task, setTask] = useState(
-    taskGroups[activeTaskGroupIndex].tasks[taskIndex]
+    taskGroups[activeTaskGroupIndex]?.tasks[taskIndex]
   );
+
+  useEffect(() => {
+    setTask(taskGroups[activeTaskGroupIndex].tasks[taskIndex]);
+  }, [activeTaskGroupIndex]);
 
   useEffect(() => {
     onTaskUpdate(activeTaskGroupIndex, task.id, task);

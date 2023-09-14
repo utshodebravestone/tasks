@@ -53,6 +53,7 @@ const TaskList: FC = () => {
         className="px-1 flex justify-between items-end gap-5"
       >
         <input
+          required
           value={newTask.name}
           onChange={(e) =>
             setNewTask((task) => ({ ...task, name: e.target.value }))

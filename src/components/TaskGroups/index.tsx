@@ -37,7 +37,7 @@ const TaskGroups: FC = () => {
                 setActiveTaskGroupIndex(taskGroups.indexOf(taskGroup));
               }}
               className={` flex justify-between items-center ${
-                taskGroup.id === taskGroups[activeTaskGroupIndex].id
+                taskGroup.id === taskGroups[activeTaskGroupIndex]?.id
                   ? "font-medium"
                   : "font-light"
               } mb-5 text-xl cursor-pointer hover:font-medium transition-all duration-300 ease-in-out`}

@@ -37,7 +37,9 @@ export const TaskContextProvider: FC<{
   children: ReactElement | ReactElement[];
 }> = ({ children }) => {
   const { value, setValue } = useLocalStorage<TaskGroupType[]>("tasks");
-  const [taskGroups, setTaskGroups] = useState<TaskGroupType[]>(value);
+  const [taskGroups, setTaskGroups] = useState<TaskGroupType[]>(
+    value || [{ id: uid(), name: "default", tasks: [] }]
+  );
 
   const onTaskGroupCreate = (taskGroup: TaskGroupType) =>
     setTaskGroups((taskGroups) => [...taskGroups, taskGroup]);
@@ -98,7 +100,7 @@ export const TaskContextProvider: FC<{
     );
 
   useEffect(() => {
-    setValue(taskGroups || [{ id: uid(), name: "default", tasks: [] }]);
+    setValue(taskGroups);
   }, [taskGroups]);
 
   return (
